@@ -1,0 +1,22 @@
+from utils import inputsInterface, pandasManipulations, outputsExport
+
+
+tablefile = inputsInterface.get_source_location()
+
+df_dict = pandasManipulations.createdf(tablefile)
+df_formatted_dict = dict()
+
+for sheetname in df_dict.keys():
+
+    df = df_dict.get(sheetname)
+
+    df = pandasManipulations.datecheckcolumn(df)
+
+    df = pandasManipulations.listdatelocations(df)
+
+    df_formatted = pandasManipulations.highlightdates(df)
+
+    df_formatted_dict.update({sheetname: df_formatted})
+
+
+outputsExport.exporttoexcel(df_formatted_dict, tablefile, df_dict.keys())
