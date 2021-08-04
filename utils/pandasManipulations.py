@@ -17,7 +17,7 @@ def listdatelocations(df):
     df_copy = df.applymap(lambda x: x if isinstance(x, datetime.date) is True else "")
 
     for index, row in df_copy.iterrows():
-        col_list = [df_copy.columns(row.index(c)) for c in row if c is True]
+        col_list = [c for c in row.index.to_list() if row.loc[c] != ""]
         df.at[index, COLUMNHEADER] = str(col_list)
     return df
 
